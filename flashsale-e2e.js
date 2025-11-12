@@ -7,8 +7,8 @@ export const options = {
             executor: 'ramping-vus',
             startVUs: 0,
             stages: [
-                { duration: '20s', target: 50 },
-                { duration: '40s', target: 50 },
+                { duration: '20s', target: 250 },
+                { duration: '40s', target: 250 },
                 { duration: '10s', target: 0 },
             ],
         },
@@ -73,6 +73,8 @@ export default function () {
     const products = productsRes.json();
     const itemId = products && products.length > 0 ? products[0].productId : null;
 
+    // console.log({itemId})
+
     //
     // 4) ADD ITEM TO CART
     //
@@ -97,18 +99,22 @@ export default function () {
     };
 
     const resvRes = http.post(
-        `${RES_BASE}/api/v1/ReservationsV1/from-cart`,
+        `${RES_BASE}/api/v1/ReservationsV1/from-cart`, // sync: V1, async: v2
         JSON.stringify(resvPayload),
         { headers: { 'Content-Type': 'application/json' } }
     );
 
     check(resvRes, { 'reservation 200': r => r.status === 200 });
 
+    // console.log({resvRes})
+
     const resvs = resvRes.json();
 
-    console.log({resvs})
+    // console.log({resvs})
     const reservationId =
         Array.isArray(resvs) && resvs.length > 0 ? resvs[0].id : null;
+
+    // console.log({reservationId})
 
     //
     // 6) GET ORDER BY RESERVATION (small helper endpoint in Order service)
@@ -118,13 +124,13 @@ export default function () {
         const maxPollsForOrder = 8; // wait up to ~8s for order service to create it
         for (let i = 0; i < maxPollsForOrder && !orderObj; i++) {
             const oRes = http.get(
-                `${ORDER_BASE}/api/v1/Orders/by-reservation/${reservationId}`,
-                { headers: { 'Content-Type': 'application/json' } }
+                `${ORDER_BASE}/api/v1/Orders/by-reservation/${reservationId}`, // no change
             );
 
             if (oRes.status === 200) {
                 const body = oRes.json();
                 orderObj = Array.isArray(body) ? body[0] : body;
+                // console.log({orderObj})
             } else {
                 sleep(1);
             }
@@ -144,14 +150,16 @@ export default function () {
             userId: TEST_USER_ID,
             amount: amount,
             paymentMethod: 'card',
-            correlationId: `k6-pay-${__VU}-${__ITER}`,
+            // correlationId: `k6-pay-${__VU}-${__ITER}`,
         };
 
         const payRes = http.post(
-            `${PAY_BASE}/api/v1/Payments`,
+            `${PAY_BASE}/api/v1/Payments`, // sync: v1, async: v2
             JSON.stringify(payPayload),
             { headers: { 'Content-Type': 'application/json' } }
         );
+
+        // console.log({payRes})
 
         check(payRes, { 'payment 201': r => r.status === 201 });
 
@@ -161,9 +169,10 @@ export default function () {
         const maxPollsForPaid = 10;
         for (let i = 0; i < maxPollsForPaid && !e2eDone; i++) {
             const finalOrderRes = http.get(
-                `${ORDER_BASE}/api/v1/Orders/${orderId}`,
-                { headers: { 'Content-Type': 'application/json' } }
+                `${ORDER_BASE}/api/v1/Orders/${orderId}`
             );
+
+            // console.log({finalOrderRes})
 
             if (finalOrderRes.status === 200) {
                 const status = finalOrderRes.json('orderStatus');
