@@ -1,0 +1,60 @@
+{
+    "async_approach_2": {
+        "thresholds": {
+            "http_req_failed": "rate=13.42%"
+        },
+        "total_results": {
+            "checks_total": 3409,
+            "checks_succeeded": 3409,
+            "checks_failed": 0,
+            "http_req_duration": {
+                "avg": "298.78ms",
+                "min": "6ms",
+                "med": "130.1ms",
+                "max": "5.53s",
+                "p90": "557.13ms",
+                "p95": "865.4ms"
+            },
+            "http_req_failed_rate": "13.42%",
+            "http_reqs": 4559,
+            "iteration_duration": {
+                "avg": "5.82s",
+                "min": "1.42s",
+                "med": "5.12s",
+                "max": "14.54s",
+                "p90": "9.46s",
+                "p95": "10.69s"
+            },
+            "iterations": 487
+        }
+    },
+    "sync_approach_1": {
+        "thresholds": {
+=            "http_req_failed": "rate=1.79%"
+        },
+        "total_results": {
+            "checks_total": 4718,
+            "checks_succeeded": 4622,
+            "checks_failed": 96,
+            "http_req_duration": {
+                "avg": "2.65s",
+                "min": "7ms",
+                "med": "908.88ms",
+                "max": "25.34s",
+                "p90": "8.47s",
+                "p95": "11s"
+            },
+            "http_req_failed_rate": "1.79%",
+            "http_reqs": 5352,
+            "iteration_duration": {
+                "avg": "20.77s",
+                "min": "1.96s",
+                "med": "20.52s",
+                "max": "51.36s",
+                "p90": "33.75s",
+                "p95": "38s"
+            },
+            "iterations": 716
+        }
+    }
+}
