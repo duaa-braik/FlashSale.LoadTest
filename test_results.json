@@ -1,60 +1,72 @@
 {
-    "async_approach_2": {
-        "thresholds": {
-            "http_req_failed": "rate=13.42%"
+  "comparison_250_VUs": {
+    "sync_approach_round_robin": {
+      "total_results": {
+        "latency": {
+          "avg": "1.6s",
+          "p90": "3.43s",
+          "p95": "4.13s"
         },
-        "total_results": {
-            "checks_total": 3409,
-            "checks_succeeded": 3409,
-            "checks_failed": 0,
-            "http_req_duration": {
-                "avg": "298.78ms",
-                "min": "6ms",
-                "med": "130.1ms",
-                "max": "5.53s",
-                "p90": "557.13ms",
-                "p95": "865.4ms"
-            },
-            "http_req_failed_rate": "13.42%",
-            "http_reqs": 4559,
-            "iteration_duration": {
-                "avg": "5.82s",
-                "min": "1.42s",
-                "med": "5.12s",
-                "max": "14.54s",
-                "p90": "9.46s",
-                "p95": "10.69s"
-            },
-            "iterations": 487
-        }
+        "cpu_usage": "2.5%",
+        "memory_usage": "163.72 MB",
+        "failure_rate": "0.00%",
+        "throughput_req_s": 114.34
+      }
     },
-    "sync_approach_1": {
-        "thresholds": {
-=            "http_req_failed": "rate=1.79%"
+    "async_approach_least_connections": {
+      "total_results": {
+        "latency": {
+          "avg": "753.49ms",
+          "p90": "1.22s",
+          "p95": "1.54s"
         },
-        "total_results": {
-            "checks_total": 4718,
-            "checks_succeeded": 4622,
-            "checks_failed": 96,
-            "http_req_duration": {
-                "avg": "2.65s",
-                "min": "7ms",
-                "med": "908.88ms",
-                "max": "25.34s",
-                "p90": "8.47s",
-                "p95": "11s"
-            },
-            "http_req_failed_rate": "1.79%",
-            "http_reqs": 5352,
-            "iteration_duration": {
-                "avg": "20.77s",
-                "min": "1.96s",
-                "med": "20.52s",
-                "max": "51.36s",
-                "p90": "33.75s",
-                "p95": "38s"
-            },
-            "iterations": 716
-        }
+        "cpu_usage": "3.56%",
+        "memory_usage": "363 MB",
+        "failure_rate": "4.48%",
+        "throughput_req_s": 153.20
+      }
+    },
+    "winner": {
+      "latency": "async_approach_least_connections",
+      "cpu_usage": "sync_approach_round_robin",
+      "memory_usage": "sync_approach_round_robin",
+      "failure_rate": "sync_approach_round_robin",
+      "throughput_req_s": "async_approach_least_connections"
     }
+  },
+  "comparison_500_VUs": {
+    "sync_approach_round_robin": {
+      "total_results": {
+        "latency": {
+          "avg": "2.22s",
+          "p90": "4.97s",
+          "p95": "6.86s"
+        },
+        "cpu_usage": "3.2%",
+        "memory_usage": "133.36 MB",
+        "failure_rate": "13.27%",
+        "throughput_req_s": 107.49
+      }
+    },
+    "async_approach_least_connections": {
+      "total_results": {
+        "latency": {
+          "avg": "1.2s",
+          "p90": "2.06s",
+          "p95": "2.42s"
+        },
+        "cpu_usage": "5%",
+        "memory_usage": "166.82 MB",
+        "failure_rate": "14.32%",
+        "throughput_req_s": 136.71
+      }
+    },
+    "winner": {
+      "latency": "async_approach_least_connections",
+      "cpu_usage": "async_approach_least_connections",
+      "memory_usage": "sync_approach_round_robin",
+      "failure_rate": "sync_approach_round_robin",
+      "throughput_req_s": "async_approach_least_connections"
+    }
+  }
 }
